@@ -17,4 +17,4 @@ jobs:
     - name: Run assignment autotest
       run: |
         cd assignment-autotest
-        ./run-autotest.sh
+        ./full-test.sh
