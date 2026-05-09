@@ -1,3 +1,8 @@
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+
 #include "unity.h"
 #include <stdbool.h>
 #include <stdlib.h>
@@ -18,5 +23,34 @@ void test_validate_my_username()
      * TODO: Replace the line below with your code here as described above to verify your /conf/username.txt 
      * config file and my_username() functions are setup properly
      */
-    TEST_ASSERT_TRUE_MESSAGE(false,"AESD students, please fix me!");
+    const char *expected = my_username();   // 1) Hard‑coded username from autotest-validate.c
+    char *from_file = malloc_username_from_conf_file();   // 2) Username read from conf/username.txt
+
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(
+       expected,
+        from_file,
+        "Username from my_username() does not match username from conf file"
+    );
+
+    free(from_file);   // 3) Prevent memory leak
+}
+// ------------------------------------------------------------
+// Required Unity functions
+void setUp(void) {}
+void tearDown(void) {}
+
+// ------------------------------------------------------------
+// Your implementation of my_username()
+const char* my_username()
+{
+    return "patricereneeemery";   // <-- replace with your GitHub username
+}
+
+// ------------------------------------------------------------
+// Unity test runner
+int main(void)
+{
+    UNITY_BEGIN();
+    RUN_TEST(test_validate_my_username);
+    return UNITY_END();
 }
